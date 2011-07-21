@@ -25,7 +25,7 @@ setup(name = 'sc',
     author_email = 'info@ixi-audio.net',
     url = 'http://www.ixi-audio.net/backyard',
 
-    packages = [ 'sc', 'scsynth', 'scosc' ],
+    packages = [ 'sc', 'scsynth', 'scosc', 'scmidi', ],
     data_files = [ ]
 )
 

@@ -1,0 +1,30 @@
+    SC 0.2 ----> Control supercollider sound server from Python
+    davk - 2011
+    davidkendall.net | www.ixi-audio.net   
+
+
+License : GNU GPL
+
+This application is free software; you can redistribute it and/or modify it under 
+the terms of the GNU, General Public License as published by the Free Software
+Foundation.
+
+This aplication is distributed in the hope that it will be useful, but WITHOUT 
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+A PARTICULAR PURPOSE. See the GNU General Public License for more details. You 
+should have received a copy of the GNU General Public License along with this 
+library; if not, write to the Free Software Foundation, Inc., 59 Temple Place, 
+Suite 330, Boston, MA 02111-1307 USA
+
+scsynth / scosc libraries by Patrick Stinson are under GNU GPL .
+sc library by ixi software is under GNU GPL.
+
+--------------------------------------------------------------------------------
+
+This is a fork of SC 0.2 by ixi software and patrick stinson. Currently my only
+plans are to implement SC's midi i/o in python. Hopefully this will not require 
+pygame. Hopefully I will not have to ababndon this project!
+
+
+
+
