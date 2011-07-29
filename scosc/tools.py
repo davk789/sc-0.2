@@ -118,7 +118,8 @@ def abs_to_timestamp(abs):
 
 def build_bundle(abs, messages):
     """ abs is floating point seconds since 1970.
-    Abs should be in osc format for high precision, but this is easy.
+    Abs should be in osc format for high precision.
+    accepts an osc message or a list of osc messages -davk
     """
     oscmessage = OSCMessage()
     bundle_bin = osctools.convertStringToOSCBinary('#bundle')
@@ -130,6 +131,9 @@ def build_bundle(abs, messages):
     bundle_bin += timestamp
 
     for message in messages:
+        if message.__class__.__name__ != 'list':
+            build_bundle(abs, [messages])
+        
         oscmessage.clearData()
         for data_guy in message:
             if type(data_guy) == type([]):
