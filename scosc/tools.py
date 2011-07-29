@@ -131,9 +131,6 @@ def build_bundle(abs, messages):
     bundle_bin += timestamp
 
     for message in messages:
-        if message.__class__.__name__ != 'list':
-            build_bundle(abs, [messages])
-        
         oscmessage.clearData()
         for data_guy in message:
             if type(data_guy) == type([]):

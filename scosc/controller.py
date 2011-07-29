@@ -88,6 +88,9 @@ class Controller:
             print 'bundle', abs
             for msg in messages:
                 print '   ',tuple(msg)
+        if not messages[0].__class__.__name__ == 'list':
+            self.sendBundleAbs(abs, [messages])
+            return None
         bin = tools.build_bundle(abs, messages)
         self._send(bin)
 
