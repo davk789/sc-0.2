@@ -60,6 +60,14 @@ class Controller:
     def _send(self, bin):
         self.socket.sendto(bin, (self.serverip, self.serverport))
 
+    def listSendMsg(self, args):
+        if self.spew:
+            print args
+        oscmessage = tools.OSCMessage()
+        for arg in args:
+            oscmessage.append(arg)
+        self._send(oscmessage.getBinary())
+
     def sendMsg(self, *args):
         if self.spew:
             print args
