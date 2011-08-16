@@ -83,14 +83,14 @@ class Listener(threading.Thread):
             traceback.print_exc()
 
 
-if __name__ == '__main__':
-    
-    PORT = 57110
+
+def main():
+    PORT = 57120
     
     def print_message(msg):
         print 'GOT MESSAGE: %s' % msg
         
-    listener = Listener(PORT)
+    listener = Listener(socket.socket(PORT))
     listener.register(None, print_message)
 
     print "Listening for messages, press enter to quit."
@@ -99,3 +99,5 @@ if __name__ == '__main__':
     listener.quit()
     listener.join()
 
+if __name__ == '__main__':
+    main()
