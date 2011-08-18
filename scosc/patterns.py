@@ -9,30 +9,52 @@ and fork().
 '''
 
 import threading
+import Queue
 
-def fork():
-    """exposing a simplified threading interface to match sc"""
-    return None
+import time
 
-class Tdef(threading.Thread):
-    def __init__(self, key, func=None):
+def fork(func):
+    """
+    essentially just an alias for calling a function in a thread.
+    """
+    return threading.Thread(target=func).start()
+
+def wait(time):
+    time.sleep(time)
+
+
+class Task(threading.Thread):
+    """
+    implement the salient features from SC's task here.
+    """
+    def __init__(self, func):
         threading.Thread.__init__(self)
-        if func:
-            setattr(Tdef, key, func)
-            return Tdef # let's pretend this is a classmethod
+        self.function = func
         
-        
-    
     def run(self):
+        return self.function()
+
+    def play(self):
+        return self.start()
+
+    def stop(self):
         pass
-    
-    @classmethod
-    def play(cls, key):
-        print key, cls.tasks
-    
+
+    def reset(self):
+        pass
 
 def test():
-    pass
+    import sys
+    def tester():
+        for i in range(4):
+            print "blabla", i
+            time.sleep(0.2)
+        return 1234
+    
+    tasck = Task(tester)
+    tasck.play()
+    sys.exit(0)
+
 
 if __name__ == "__main__":
     test()
