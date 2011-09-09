@@ -1,59 +1,76 @@
 '''
 Created on Aug 15, 2011
 
-Try to implement Tdef. It would be nice to recreate the functionality of sc's
-pattern classes in their entirety. Someday, maybe. But for now, implement Tdef
-and fork().
+Jamming any SC-esque control structures here. Maybe something will stick.
 
 @author: davk
 '''
 
-import threading
-import Queue
+import random
+import copy
 
-import time
-
-def fork(func):
+class Pattern(object):
+    """Base class for Pattern objects. These classes are here as a convenience, 
+    and do not attempt to replicate SC's pattern classes exactly.
+    
+    Intended use:
+    p = Pseq([2,3,4,5,6])
+    print p.next()
+    print p.next()
+    print p.next()
     """
-    essentially just an alias for calling a function in a thread.
-    """
-    return threading.Thread(target=func).start()
-
-def wait(time):
-    time.sleep(time)
-
-
-class Task(threading.Thread):
-    """
-    implement the salient features from SC's task here.
-    """
-    def __init__(self, func):
-        threading.Thread.__init__(self)
-        self.function = func
+    def __init__(self, list, iter=None):
+        self.sequence = list
+        if iter:
+            self.maxcount = len(list) * iter
+        else:
+            self.maxcount = None 
+        self.counter = 0
+    
+    def next(self):
+        """Subclasses must implement a next() method."""
+        index = self.next_index()
         
-    def run(self):
-        return self.function()
+        if self.maxcount is None or self.counter < self.maxcount:
+            return self.do_next(index)
+        else:
+            return None
 
-    def play(self):
-        return self.start()
-
-    def stop(self):
-        pass
+    def do_next(self):
+        print "Subclass must implement Pattern.do_next()!"
+        
+    def next_index(self):
+        index = self.counter % len(self.sequence)
+        self.counter += 1
+        return index
 
     def reset(self):
-        pass
+        """Subclasses need to implement a reset() method."""
+        self.counter = 0
+
+class Pseq(Pattern):
+    def __init__(self, list, repeats=None):
+        super(Pseq, self).__init__(list, repeats)
+        
+    def do_next(self, index):
+        return self.sequence[index]
+
+class Pshuf(Pattern):
+    def __init__(self, list, repeats=None):
+        super(Pshuf, self).__init__(list, repeats)
+
+    def do_next(self, index):
+        if index == 0:
+            random.shuffle(self.sequence)
+        return self.sequence[index]
+# ... More classes to follow
 
 def test():
-    import sys
-    def tester():
-        for i in range(4):
-            print "blabla", i
-            time.sleep(0.2)
-        return 1234
-    
-    tasck = Task(tester)
-    tasck.play()
-    sys.exit(0)
+    list = [random.random() * float(i) for i in range(10)]
+    print list
+    seq = Pshuf(list)
+    for i in range(25):
+        print seq.next()
 
 
 if __name__ == "__main__":
