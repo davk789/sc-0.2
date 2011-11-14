@@ -29,6 +29,17 @@ import struct
 import OSC
 import osctools
 
+# *** dk - miscellaneous utility functions ***
+
+def nextNodeID():
+    """cycle through node numbers in the range 1000 ... 2^16.
+    WARNING: this function does not guarantee safety, and will cause conflicts
+    with multiple imports."""
+    num = nextNodeID.id
+    nextNodeID.id = max((nextNodeID.id + 1) % 65536, 1000)
+    return num
+    
+nextNodeID.id = 1000
 
 class OSCMessage(object):
     """Builds OSC message how supercollider wants them
